@@ -3,7 +3,7 @@
 import numpy as np
 from scipy import constants as spc
 from scipy import interpolate as spi
-from .material_base import _Material
+from ._material_base import _Material
 
 
 class File(_Material):
