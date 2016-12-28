@@ -1,8 +1,7 @@
 # opticalmaterialspy
 Python library with optical material properties.
 
-This library provides a common interface to access the optical properties of
-materials.  The main optical properties include:
+This library provides a common interface to access the optical properties of materials.  The main optical properties include:
 
 * permittivity (and derivatives with respect to wavelength),
 * refractive index (and derivatives with respect to wavelength),
@@ -10,10 +9,7 @@ materials.  The main optical properties include:
 * group velocity refractive index, and
 * group velocity dispersion.
 
-All properties are calculate from the Sellmeier equation of the material.  In
-order to access all the above properties, minimally, the Sellmeier equation
-of the desired material should be added (if it isn't already).  Many materials
-already exist as an example.
+All properties are calculate from the Sellmeier equation of the material.  In order to access all the above properties, minimally, the Sellmeier equation of the desired material should be added (if it isn't already).  Many materials already exist as an example.
 
 ## Installation
 There are three main ways to install `opticalmaterialspy`.
@@ -23,8 +19,7 @@ There are three main ways to install `opticalmaterialspy`.
 * Arch Linux: `yaourt -S python-opticalmaterialspy`
 
 ### Dependencies
-If installing using the [Arch Linux AUR package](https://aur.archlinux.org/packages/python-opticalmaterialspy/), dependencies will be automatically downloaded and installed, if not, one should ensure the following
-dependencies are installed:
+If installing using the [Arch Linux AUR package](https://aur.archlinux.org/packages/python-opticalmaterialspy/), dependencies will be automatically downloaded and installed, if not, one should ensure the following dependencies are installed:
 
 * [setuptools](https://pypi.python.org/pypi/setuptools),
 * [numpy](http://www.numpy.org/), and
@@ -65,5 +60,4 @@ The main reasons to consider this library include:
 	GVD(0.808um): 3.59254440673e-26 
 
 ## Contributions
-If you add functionality, especially new materials, I'd appreciate you send me a pull request,
-or email the code to me so we can all benefit.
+If you add functionality, especially new materials, I'd appreciate you send me a pull request, or email the code to me so we can all benefit.
