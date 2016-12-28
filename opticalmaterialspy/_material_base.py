@@ -16,7 +16,7 @@ class _Material(metaclass=abc.ABCMeta):
         self.nDer2Func = None
 
     def _convertWavelengthUnitsNm(self, wavelength):
-        if wavelength:
+        if wavelength is not False and wavelength is not None:
             if np.all(wavelength <= self._wlMax * 1.e-9):
                 wlFactor = 1.e9
             elif np.all(wavelength <= self._wlMax * 1.e-3):
