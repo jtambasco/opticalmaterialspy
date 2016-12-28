@@ -23,11 +23,12 @@ There are three main ways to install `opticalmaterialspy`.
 * Arch Linux: `yaourt -S python-opticalmaterialspy`
 
 ### Dependencies
-If installing using the Arch Linux AUR package, dependencies will be automatically downloaded
-and installed, if not, one should ensure the following dependencies are installed:
+If installing using the [Arch Linux AUR package](https://aur.archlinux.org/packages/python-opticalmaterialspy/), dependencies will be automatically downloaded and installed, if not, one should ensure the following
+dependencies are installed:
 
-* [numpy](http://www.numpy.org/),
-* [scipy](https://www.scipy.org/),
+* [setuptools](https://pypi.python.org/pypi/setuptools),
+* [numpy](http://www.numpy.org/), and
+* [scipy](https://www.scipy.org/).
 
 ## Features
 The main reasons to consider this library include:
