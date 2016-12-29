@@ -121,6 +121,7 @@ class Ln(_Material):
 
 class LnMg(_Material):
     def __init__(self, axis):
+        _Material.__init__(self)
         assert(axis in ['o', 'e'])
         self.A = [None]*6
         if axis is 'e':
@@ -151,6 +152,7 @@ class LnMg(_Material):
 # Gayer, 2008, Temperature and wavelength dependent refractive index equations for MgO-doped congruent and stoichiometric LiNbO3
 class LnMgTemp(_Material):
     def __init__(self, axis, temperatureCelcius=20.):
+        _Material.__init__(self)
         assert(axis in ['o', 'e'])
         self.T = temperatureCelcius
         self.F = (self.T - 24.5) * (self.T + 570.82)
@@ -193,6 +195,7 @@ class LnMgTemp(_Material):
 # https://www.coherent.com/downloads/BBO_DS.pdf
 class Bbo(_Material):
     def __init__(self, axis):
+        _Material.__init__(self)
         assert(axis in ['o', 'e'])
         self.A = [None]*4
         if axis is 'e':
@@ -216,6 +219,7 @@ class Bbo(_Material):
 # https://books.google.com.au/books?id=zKI4hdtEVHwC&pg=PA216&lpg=PA216&dq=bibo+refractive+index+sellmeier&source=bl&ots=lyfLo24tVp&sig=z-shFbjI1HXynIKkS0XZENjoxOw&hl=en&sa=X&ei=KpNuVbjyJ8rz8gWk-YKIDg&ved=0CDoQ6AEwBQ#v=onepage&q=bibo%20refractive%20index%20sellmeier&f=false
 class Bibo(Bbo):
     def __init__(self, axis):
+        _Material.__init__(self)
         assert(axis in ['x', 'y', 'z'])
         self.A = [None]*5
         if axis is 'x':
@@ -238,6 +242,7 @@ class Bibo(Bbo):
 # G. Boudebs, S. Cherukulappurath, M. Guignard, J. Troles, F. Smektala, F. Sanchez
 class Chalcogenide(_Material):
     def __init__(self, chalcogenideType):
+        _Material.__init__(self)
         self.chalcogenideType = chalcogenideType
         cauchyCoefs = { 'As2S3'        : [5.41, 0.20,  0.14] ,
                         'As2Se3'       : [7.56, 1.03,  0.12] ,
