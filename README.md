@@ -14,12 +14,11 @@ All properties are calculate from the Sellmeier equation of the material.  In or
 ## Installation
 There are three main ways to install `opticalmaterialspy`.
 
-* pip: `pip install opticalmaterialspy`
-* setuptools: `cd opticalmaterialspy && python setup.py install`
+* pip: `pip3 install git+https://github.com/jtambasco/opticalmaterialspy.git`
 * Arch Linux: `yaourt -S python-opticalmaterialspy`
 
 ### Dependencies
-If installing using the [Arch Linux AUR package](https://aur.archlinux.org/packages/python-opticalmaterialspy/), dependencies will be automatically downloaded and installed, if not, one should ensure the following dependencies are installed:
+If installing using the [Arch Linux AUR package](https://aur.archlinux.org/packages/python-opticalmaterialspy/) or via `pip`, dependencies will be automatically downloaded and installed; otherwise, one should ensure the following dependencies are installed:
 
 * [setuptools](https://pypi.python.org/pypi/setuptools),
 * [numpy](http://www.numpy.org/), and
@@ -36,28 +35,31 @@ The main reasons to consider this library include:
 ## Examples
 ### Example 1: Optical parameters for SiO2
 #### Python Script
+```python
+import opticalmaterialspy as mat
 
-	import opticalmaterialspy as mat
+m = mat.SiO2()
 
-	m = mat.SiO2()
+# Refractive index @ 1550nm.
+print('n(1.55e-6m):', m.n(1.55e-6)) # Knows 1.55e-6 must be [m].
+print('n(1.55um):', m.n(1.55)) # Knows 1.55 must be [um].
+print('n(1550nm):', m.n(1550)) # Knows 1550 must be [nm].
 
-	# Refractive index @ 1550nm.
-	print('n(1.55e-6m):', m.n(1.55e-6)) # Knows 1.55e-6 must be [m].
-	print('n(1.55um):', m.n(1.55)) # Knows 1.55 must be [um].
-	print('n(1550nm):', m.n(1550)) # Knows 1550 must be [nm].
+# Group velocity refractive index @ 900nm.
+print('n_gv(900nm):', m.ng(900))
 
-	# Group velocity refractive index @ 900nm.
-	print('n_gv(900nm):', m.ng(900))
-
-	# Group velocity dispersion @ 808nm.
-	print('GVD(0.808um):', m.gvd(0.808))
+# Group velocity dispersion @ 808nm.
+print('GVD(0.808um):', m.gvd(0.808))
+```
 	
 #### Output
-	n(1.55e-6m): 1.4440236217
-	n(1.55um): 1.4440236217
-	n(1550nm): 1.4440236217
-	n_gv(900nm): 1.46462460402
-	GVD(0.808um): 3.59254440673e-26 
+```
+n(1.55e-6m): 1.4440236217
+n(1.55um): 1.4440236217
+n(1550nm): 1.4440236217
+n_gv(900nm): 1.46462460402
+GVD(0.808um): 3.59254440673e-26
+```
 
 ## Contributions
 If you add functionality, especially new materials, I'd appreciate you send me a pull request, or email the code to me so we can all benefit.
