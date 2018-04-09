@@ -5,7 +5,7 @@ import abc
 
 
 class _Material(metaclass=abc.ABCMeta):
-    def __init__(self, wlMinNm=300., wlMaxNm=3000.):
+    def __init__(self, wlMinNm=300., wlMaxNm=5000.):
         self._wlMin = wlMinNm
         self._wlMax = wlMaxNm
 
@@ -24,7 +24,7 @@ class _Material(metaclass=abc.ABCMeta):
             else:
                 wlFactor = 1.
             wl = wavelength * wlFactor
-            assert(np.all(wl >= 300.) and np.all(wl <= 3000.))
+            assert(np.all(wl >= self._wlMin) and np.all(wl <= self._wlMax))
         else:
             wl = wavelength
         return wl
