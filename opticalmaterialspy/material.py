@@ -119,6 +119,26 @@ class Ln(_Material):
         return A[0] + (A[1] + B[0]*F) / (wavelength**2 - (A[2] + B[1]*F)**2) + \
                B[2]*F - A[3]*wavelength**2
 
+class Tfln(Ln):
+    def __init__(self, axis, temperatureCelcius=20.):
+        Ln.__init__(self, axis, temperatureCelcius)
+
+        eps_1550_orig = super(Tfln, self)._eps(1550)
+
+        if axis == 'o':
+            no_1550 = 2.20600
+            epso_1550 = no_1550**2
+            self._deps = epso_1550 - eps_1550_orig
+        elif axis == 'e':
+            ne_1550 = 2.14455
+            epse_1550 = ne_1550**2
+            self._deps = epse_1550 - eps_1550_orig
+
+    def _eps(self, wavelength):
+        e = super(Tfln, self)._eps(wavelength)
+        e += self._deps
+        return e
+
 class LnMg(_Material):
     def __init__(self, axis):
         _Material.__init__(self)
