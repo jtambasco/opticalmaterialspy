@@ -296,3 +296,53 @@ class Su8(_Material):
         n = _Material.cauchy_equation(wavelength, self.coefs)
         eps = n**2
         return eps
+
+# https://refractiveindex.info/?shelf=main&book=Al2O3&page=Malitson-o
+class Al2O3(_Material):
+    def __init__(self, axis):
+        _Material.__init__(self)
+        assert(axis in ['o', 'e'])
+        if axis == 'o':
+            self._eps_e_o = self._eps_o
+        elif axis == 'e':
+            self._eps_e_o = self._eps_e
+
+    def _eps_o(self, wavelength):
+        x = wavelength * 1.e-3
+        e = 1+1.4313493/(1-np.power(0.0726631/x,2))+ \
+            0.65054713/(1-np.power(0.1193242/x,2))+ \
+            5.3414021/(1-np.power(18.028251/x,2))
+        return e
+
+    def _eps_e(self, wavelength):
+        x = wavelength * 1.e-3
+        e = 1+1.5039759/(1-np.power(0.0740288/x,2))+ \
+            0.55069141/(1-np.power(0.1216529/x,2))+ \
+            6.5927379/(1-np.power(20.072248/x,2))
+        return e
+
+    def _eps(self, wavelength):
+        return self._eps_e_o(wavelength)
+
+# https://refractiveindex.info/?shelf=main&book=TiO2&page=Devore-o
+class TiO2(_Material):
+    def __init__(self, axis):
+        _Material.__init__(self)
+        assert(axis in ['o', 'e'])
+        if axis == 'o':
+            self._eps_e_o = self._eps_o
+        elif axis == 'e':
+            self._eps_e_o = self._eps_e
+
+    def _eps_o(self, wavelength):
+        x = wavelength * 1.e-3
+        e = 5.913+0.2441/(np.power(x,2)-0.0803)
+        return e
+
+    def _eps_e(self, wavelength):
+        x = wavelength * 1.e-3
+        e = 7.197+0.3322/(np.power(x,2)-0.0843)
+        return e
+
+    def _eps(self, wavelength):
+        return self._eps_e_o(wavelength)
