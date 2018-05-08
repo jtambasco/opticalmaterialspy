@@ -100,3 +100,43 @@ class _Material(metaclass=abc.ABCMeta):
             exponent  = 2*i
             n += c / wavelength**exponent
         return n
+
+class _MaterialAni(metaclass=abc.ABCMeta):
+    def __init__(self):
+        pass
+
+    @abc.abstractproperty
+    def xx(self):
+        pass
+
+    @abc.abstractproperty
+    def yy(self):
+        pass
+
+    @abc.abstractproperty
+    def zz(self):
+        pass
+
+    @property
+    def xy(self):
+        return None
+
+    @property
+    def xz(self):
+        return None
+
+    @property
+    def yx(self):
+        return None
+
+    @property
+    def yz(self):
+        return None
+
+    @property
+    def zx(self):
+        return None
+
+    @property
+    def zy(self):
+        return None
