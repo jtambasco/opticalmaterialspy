@@ -14,7 +14,7 @@ All properties are calculate from the Sellmeier equation of the material.  In or
 ## Installation
 There are three main ways to install `opticalmaterialspy`.
 
-* pip: `pip3 install git+https://github.com/jtambasco/opticalmaterialspy.git`
+* pip: `pip3 install opticalmaterialspy`
 * Arch Linux: `yaourt -S python-opticalmaterialspy`
 
 ### Dependencies
@@ -51,7 +51,7 @@ print('n_gv(900nm):', m.ng(900))
 # Group velocity dispersion @ 808nm.
 print('GVD(0.808um):', m.gvd(0.808))
 ```
-	
+
 #### Output
 ```
 n(1.55e-6m): 1.4440236217
