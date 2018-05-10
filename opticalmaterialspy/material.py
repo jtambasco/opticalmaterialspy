@@ -59,6 +59,7 @@ class Air(_Material):
 # http://www.opticsinfobase.org/view_article.cfm?gotourl=http%3A%2F%2Fwww.opticsinfobase.org%2FDirectPDFAccess%2FEEE59E78-F228-BD74-8B64990932FFCE71_69785%2Fao-41-24-5040.pdf%3Fda%3D1%26id%3D69785%26seq%3D0%26mobile%3Dno&org=Royal%20Melbourne%20Institute%20of%20Technology%20Swanston
 class Ktp(_Material):
     def __init__(self, axis):
+        _Material.__init__(self)
         assert(axis in ['x', 'y', 'z'])
         self.A = [None]*5
         if axis is 'x':
