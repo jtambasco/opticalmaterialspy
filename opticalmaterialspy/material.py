@@ -5,11 +5,17 @@ from scipy import constants as spc
 from scipy import interpolate as spi
 from ._material_base import _Material
 
-
 class File(_Material):
-    '''  `filename` is the name of a file with column 1 as the wavelength [nm],
-         column 2 as the effective index of mode 1, column 3 as the effective
-         index of mode 2 etc. '''
+    '''
+    An object that facilitates importing materials from a file.
+
+    Args:
+        filename (str): The name of a file with column 1 as the wavelength [nm],
+            column 2 as the effective index of mode 1, column 3 as the effective
+            index of mode 2 etc.
+        mode (int): The mode to load. Default is 0 (the first mode in the file).
+        delimiter (str): The character(s) delimiting the data in the data file.
+    '''
     def __init__(self, filename, mode=0, delimiter=','):
         txt = np.loadtxt(filename, delimiter=delimiter)
         wls = txt[:,0] * 1.e-9

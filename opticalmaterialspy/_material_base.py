@@ -5,6 +5,14 @@ import abc
 
 
 class _Material(metaclass=abc.ABCMeta):
+    '''
+    Abstract material class that can calculate many
+    material properties based on the permittivity.
+
+    Args:
+        wlMinNm (float): The minimum wavelength [nm].
+        wlMaxNm (float): The maximum wavelength [nm].
+    '''
     def __init__(self, wlMinNm=300., wlMaxNm=5000.):
         self._wlMin = wlMinNm
         self._wlMax = wlMaxNm
@@ -37,10 +45,32 @@ class _Material(metaclass=abc.ABCMeta):
 
     @abc.abstractproperty
     def _eps(self, wavelength=None):
+        '''
+        The permittivty of the desired material.
+
+        Each new material needs this method implemented.
+
+        Args:
+            wavelength (float, list, None): The wavelength the permittivty
+                will be evaluated at.
+
+        Returns:
+            float, list: The permittivty at the target wavelength.
+        '''
         return NotImplementedError
 
     @convertWavelengthUnitsNm
     def eps(self, wavelength=None):
+        '''
+        The permittivty of the desired material.
+
+        Args:
+            wavelength (float, list, None): The wavelength the permittivty
+                will be evaluated at.
+
+        Returns:
+            float, list: The permittivty at the target wavelength.
+        '''
         return self._eps(wavelength)
 
     def _nDer1(self, wavelength):
@@ -56,47 +86,151 @@ class _Material(metaclass=abc.ABCMeta):
         return self.nDer2Func(wavelength) * 1.e9  # [1/(nm)^2] -> [1/m]
 
     def n(self, wavelength=None):
+        '''
+        The refractive index of the desired material.
+
+        Args:
+            wavelength (float, list, None): The wavelength the refractive index
+                will be evaluated at.
+
+        Returns:
+            float, list: The refractive index at the target wavelength.
+        '''
         return self.eps(wavelength)**0.5
 
     # dn/dlambda
     def nDer1(self, wavelength):
+        '''
+        The first derivative of the refractive index with respect to
+        wavelength.
+
+        Args:
+            wavelength (float, list, None): The wavelength(s) the derivative
+                will be evaluated at.
+
+        Returns:
+            float, list: The refractive index at the target wavelength(s).
+        '''
         return self._nDer1(wavelength)
 
     # d^2n/dlambda^2
     def nDer2(self, wavelength):
+        '''
+        The second derivative of the refractive index with respect to
+        wavelength.
+
+        Args:
+            wavelength (float, list, None): The wavelength(s) the derivative
+                will be evaluated at.
+
+        Returns:
+            float, list: The refractive index at the target wavelength(s).
+        '''
         return self._nDer2(wavelength)
 
     # n_g: group velocity index
     @convertWavelengthUnitsNm
     def ng(self, wavelength):
+        '''
+        The group index with respect to wavelength.
+
+        Args:
+            wavelength (float, list, None): The wavelength(s) the group
+                index will be evaluated at.
+
+        Returns:
+            float, list: The group index at the target wavelength(s).
+        '''
         return self.n(wavelength) - (wavelength*1.e-9)*self.nDer1(wavelength)
 
     # Group velocity (v_g)
     def vg(self, wavelength):
+        '''
+        The group velocities with respect to wavelength.
+
+        Args:
+            wavelength (float, list, None): The wavelength(s) the group
+                velocities will be evaluated at.
+
+        Returns:
+            float, list: The group velocities at the target wavelength(s).
+        '''
         return spc.c / self.ng(wavelength)
 
     # Group velocity dispersion (GVD)
     # beta_2 = lambda^3/(2 pi c^2) * d^2n/dlambda^2
     @convertWavelengthUnitsNm
     def gvd(self, wavelength):
+        '''
+        The group velocity dispersion (GVD) with respect to wavelength.
+
+        Args:
+            wavelength (float, list, None): The wavelength(s) the GVD will
+                be evaluated at.
+
+        Returns:
+            float, list: The GVD at the target wavelength(s).
+        '''
         g = (wavelength*1.e-9)**3./(2.*spc.pi*spc.c**2.) * self.nDer2(wavelength)
         return g
 
     # beta(w) = beta0 + beta1(w-w0) + 1/2 beta2(w-w0)^2 + ...
     @convertWavelengthUnitsNm
     def beta0(self, wavelength):
+        '''
+        The propagation constant with respect to wavelength.
+
+        Args:
+            wavelength (float, list, None): The wavelength(s) the
+                propagation constant will be evaluated at.
+
+        Returns:
+            float, list: The propagation constant at the target wavelength(s).
+        '''
         return 2.*spc.pi*self.n(wavelength)/(wavelength*1.e-9)
 
     def beta1(self, wavelength):
+        '''
+        The derivative of the propagation constant with respect to wavelength.
+
+        Args:
+            wavelength (float, list, None): The wavelength(s) the
+                propagation constant will be evaluated at.
+
+        Returns:
+            float, list: The propagation constant at the target wavelength(s).
+        '''
         return 1./self.vg(wavelength)
 
     def beta2(self, wavelength):
+        '''
+        The second derivative of the propagation constant with respect to wavelength.
+
+        Args:
+            wavelength (float, list, None): The wavelength(s) the
+                propagation constant will be evaluated at.
+
+        Returns:
+            float, list: The propagation constant at the target wavelength(s).
+        '''
         return self.gvd(wavelength)
 
     @staticmethod
-    def cauchy_equation(wavelength, coeffients):
+    def cauchy_equation(wavelength, coefficients):
+        '''
+        Helpful function to evaluate Cauchy equations.
+
+        Args:
+            wavelength (float, list, None): The wavelength(s) the
+                Cauchy equation will be evaluated at.
+            coefficients (list): A list of the coefficients of
+                the Cauchy equation.
+
+        Returns:
+            float, list: The refractive index at the target wavelength(s).
+        '''
         n = 0.
-        for i, c in enumerate(coeffients):
+        for i, c in enumerate(coefficients):
             exponent  = 2*i
             n += c / wavelength**exponent
         return n
