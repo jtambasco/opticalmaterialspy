@@ -5,8 +5,7 @@ API documentation
 Materials
 *********
 
-.. automodule:: opticalmaterialspy.material
-   :members:
-   :undoc-members:
-   :inherited-members:
-   :show-inheritance:
+.. automodapi:: opticalmaterialspy.material
+
+    :inherited-members:
+    :no-heading:

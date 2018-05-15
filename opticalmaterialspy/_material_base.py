@@ -2,6 +2,7 @@ import numpy as np
 from scipy import constants as spc
 from scipy import interpolate as spi
 import abc
+from functools import wraps
 
 
 class _Material(metaclass=abc.ABCMeta):
@@ -38,6 +39,7 @@ class _Material(metaclass=abc.ABCMeta):
         return wl
 
     def convertWavelengthUnitsNm(func):
+        @wraps(func)
         def _convertWavelengthUnitsNmWrapper(self, wavelength):
             wl = self._convertWavelengthUnitsNm(wavelength)
             return func(self, wl)
