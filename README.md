@@ -1,6 +1,8 @@
 # opticalmaterialspy
 Python library with optical material properties.
 
+The documentation can be found [here](http://opticalmaterialspy.readthedocs.io/).
+
 This library provides a common interface to access the optical properties of materials.  The main optical properties include:
 
 * permittivity (and derivatives with respect to wavelength),
