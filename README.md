@@ -11,10 +11,10 @@ This library provides a common interface to access the optical properties of mat
 * group velocity refractive index, and
 * group velocity dispersion.
 
-All properties are calculate from the Sellmeier equation of the material.  In order to access all the above properties, minimally, the Sellmeier equation of the desired material should be added (if it isn't already).  Many materials already exist as an example.
+All properties are calculate from the Sellmeier equation of the material.  In order to access all the above properties, minimally, the Sellmeier equation of the desired material should be added (if it isn't already).  Many materials already exist as an example.  The library can also use any material from [refractiveindex.info](https://refractiveindex.info/) by simply using the weblink of the desired material.
 
 ## Installation
-There are three main ways to install `opticalmaterialspy`.
+There are two main ways to install `opticalmaterialspy`.
 
 * pip: `pip3 install opticalmaterialspy`
 * Arch Linux: `yaourt -S python-opticalmaterialspy`
@@ -30,6 +30,7 @@ If installing using the [Arch Linux AUR package](https://aur.archlinux.org/packa
 The main reasons to consider this library include:
 
 * generic and simple interface for all materials,
+* interfaces easily with [refractiveindex.info](https://refractiveindex.info/),
 * adding a new material only requires implementing one function,
 * there is already a class written to generically accept a material from a text file, and
 * intelligently works out what units the wavelengths being used are (see example).
@@ -41,6 +42,9 @@ The main reasons to consider this library include:
 import opticalmaterialspy as mat
 
 m = mat.SiO2()
+
+# Or to use SiO2 from refractiveindex.info...
+# m = mat.RefractiveIndexWeb('https://refractiveindex.info/?shelf=main&book=SiO2&page=Malitson')
 
 # Refractive index @ 1550nm.
 print('n(1.55e-6m):', m.n(1.55e-6)) # Knows 1.55e-6 must be [m].

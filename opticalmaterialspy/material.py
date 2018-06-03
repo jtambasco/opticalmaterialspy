@@ -4,8 +4,9 @@ import numpy as np
 from scipy import constants as spc
 from scipy import interpolate as spi
 from ._material_base import _Material
+import urllib.request
 
-class File(_Material):
+class Data(_Material):
     '''
     An object that facilitates importing materials from a file.
 
@@ -16,44 +17,40 @@ class File(_Material):
         mode (int): The mode to load. Default is 0 (the first mode in the file).
         delimiter (str): The character(s) delimiting the data in the data file.
     '''
-    def __init__(self, filename, mode=0, delimiter=','):
-        txt = np.loadtxt(filename, delimiter=delimiter)
-        wls = txt[:,0] * 1.e-9
-        nEffs = txt[:,mode+1]
+    def __init__(self, wls, ns):
+        wls *= 1e3
+        wl_min = wls[0]
+        wl_max = wls[-1]
+        n_func = spi.interp1d(wls, ns)
+        self._n = lambda wavelength: n_func(wavelength)
+        _Material.__init__(self, wl_min, wl_max)
 
-        wlMin = wls[0]
-        wlMax = wls[-1]
-        nEffFunc = spi.interp1d(wls, nEffs)
-        self._eps = lambda wavelength: nEffFunc(wavelength)
-        e = self.eps(wavelength)
-        return e**0.5
+    def _eps(self, wavelength):
+        return self._n(wavelength)**2
 
-        Material.__init__(self, wlMin, wlMax)
+class RefractiveIndexWeb(Data):
+    def __init__(self, web_link):
+        self._web_link = web_link
 
-class FileWg(File):
-    def __init__(self, filenameNEff, filenameBulk, lnNewBulkMaterial=None, mode=0, delimiter=','):
-        txt1 = np.loadtxt(filenameNEff, delimiter=delimiter)
-        wls = txt1[:,0] * 1.e-9
-        nEffs = txt1[:,mode+1]
-        wlMin = wls[0]
-        wlMax = wls[-1]
-        nEffFunc = spi.interp1d(wls, nEffs)
-        self._eps = lambda wavelength: nEffFunc(wavelength)
+        fields = self._parse_weblink(web_link)
+        data = self._get_csv(fields)
 
-        txt2 = np.loadtxt(filenameBulk, delimiter=delimiter)
-        wls = txt2[:,0] * 1.e-9
-        nBulks = txt2[:,1]
-        nBulkFunc = spi.interp1d(wls, nBulks)
+        Data.__init__(self, data[0], data[1])
 
-        nIndContrastFunc = lambda wls: nEffFunc(wls) - nBulkFunc(wls)
-        if lnNewBulkMaterial:
-            nEffNewFunc = lambda wls: lnNewBulkMaterial.n(wls*1.e9) + nIndContrastFunc(wls)
-        else:
-            nEffNewFunc = nEffFunc
+    def _parse_weblink(self, link):
+        prefix = 'https://refractiveindex.info/?'
+        suffix = link[len(prefix):]
+        info = suffix.split('&')
+        fields = dict([f.split('=') for f in info])
+        return fields
 
-        self.dn = lambda wls: nIndContrastFunc(wls*1.e-9)
+    def _get_csv(self, fields):
+        csv_url = 'https://refractiveindex.info/data_csv.php?datafile=data/%s/%s/%s.yml' \
+            % (fields['shelf'], fields['book'], fields['page'])
 
-        Material.__init__(self, wlMin, wlMax)
+        data = urllib.request.urlopen(csv_url).read().decode().split('\r\n')[1:-1]
+        data = np.array([[float(x) for x in d.split(',')] for d in data]).T
+        return data
 
 class Air(_Material):
     def __init__(self):

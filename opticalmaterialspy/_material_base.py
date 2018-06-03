@@ -33,7 +33,8 @@ class _Material(metaclass=abc.ABCMeta):
             else:
                 wlFactor = 1.
             wl = wavelength * wlFactor
-            assert(np.all(wl >= self._wlMin) and np.all(wl <= self._wlMax))
+            assert(np.all(wl >= self._wlMin) and np.all(wl <= self._wlMax)), \
+                'Wavelength not in range %.1f nm to %.1f nm.' % (self._wlMin, self._wlMax)
         else:
             wl = wavelength
         return wl
