@@ -218,8 +218,23 @@ class _Material(metaclass=abc.ABCMeta):
         '''
         return self.gvd(wavelength)
 
+    def z0(self, wavelength):
+        '''
+        The wave impedance assuming the material is dielectric (not
+        lossy or magnetic).
+
+        Args:
+            wavelength (float, list, None): The wavelength(s) the
+                propagation constant will be evaluated at.
+
+        Returns:
+            float, list: The impedance of the material.
+
+        '''
+        return 120*np.pi / self.n(wavelength)
+
     @staticmethod
-    def cauchy_equation(wavelength, coefficients):
+    def _cauchy_equation(wavelength, coefficients):
         '''
         Helpful function to evaluate Cauchy equations.
 

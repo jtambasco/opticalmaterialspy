@@ -305,7 +305,7 @@ class Su8(_Material):
 
     def _eps(self, wavelength):
         wavelength /= 1000.
-        n = _Material.cauchy_equation(wavelength, self.coefs)
+        n = _Material._cauchy_equation(wavelength, self.coefs)
         eps = n**2
         return eps
 
