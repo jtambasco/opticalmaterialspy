@@ -8,16 +8,16 @@ import urllib.request
 
 class Data(_Material):
     '''
-    An object that facilitates importing materials from a file.
+    An object that facilitates importing materials from lists.
 
     Args:
-        filename (str): The name of a file with column 1 as the wavelength [nm],
-            column 2 as the effective index of mode 1, column 3 as the effective
-            index of mode 2 etc.
-        mode (int): The mode to load. Default is 0 (the first mode in the file).
-        delimiter (str): The character(s) delimiting the data in the data file.
+        wls (list): List of wavelengths.
+        ns (list): List of refractive indices at the corresponding `wls`.
+            Should be the same size as `wls`.
     '''
     def __init__(self, wls, ns):
+        assert len(wls) == len(ns), ('There should be the same amount of '
+            'wavelengths as refractive index values.')
         wls *= 1e3
         wl_min = wls[0]
         wl_max = wls[-1]
@@ -29,6 +29,14 @@ class Data(_Material):
         return self._n(wavelength)**2
 
 class RefractiveIndexWeb(Data):
+    '''
+    Object to create a `_Material` based on data from https://refractiveindex.info/.
+
+    Args:
+        web_link (str):  The web link to the material.  As an example, for GaAs
+            by Aspnes et al. 1986 the one should use 
+            'https://refractiveindex.info/?shelf=main&book=GaAs&page=Aspnes'.
+    '''
     def __init__(self, web_link):
         self._web_link = web_link
 
