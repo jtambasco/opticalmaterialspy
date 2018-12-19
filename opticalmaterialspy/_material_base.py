@@ -292,3 +292,14 @@ class _MaterialAni(metaclass=abc.ABCMeta):
     @property
     def zy(self):
         return None
+
+    def n3(self, wl):
+        return [self.xx.n(wl), self.yy.n(wl), self.zz.n(wl)]
+
+    def n_xyz(self, wl):
+        return self.n3(wl)
+
+    def n5(self, wl):
+        return [self.xx.n(wl), self.xy.n(wl), self.yx.n(wl),
+                self.yy.n(wl), self.zz.n(wl)]
+
