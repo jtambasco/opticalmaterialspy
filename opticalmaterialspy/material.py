@@ -5,6 +5,8 @@ from scipy import constants as spc
 from scipy import interpolate as spi
 from ._material_base import _Material
 import urllib.request
+import os
+import json
 
 class Data(_Material):
     '''
@@ -34,14 +36,35 @@ class RefractiveIndexWeb(Data):
 
     Args:
         web_link (str):  The web link to the material.  As an example, for GaAs
-            by Aspnes et al. 1986 the one should use 
+            by Aspnes et al. 1986 the one should use
             'https://refractiveindex.info/?shelf=main&book=GaAs&page=Aspnes'.
     '''
     def __init__(self, web_link):
         self._web_link = web_link
 
-        fields = self._parse_weblink(web_link)
-        data = self._get_csv(fields)
+        path = os.path.dirname(__file__)
+        fn_cache = path + '/.material.cache'
+        if not os.path.exists(fn_cache):
+            # If cache file does not yet exist.
+            # Get web data and dump it to the newly created cache file.
+            fields = self._parse_weblink(web_link)
+            data = self._get_csv(fields)
+            cache = {web_link: data.tolist()}
+            with open(fn_cache, 'w') as fs:
+                json.dump(cache, fs)
+        else:
+            # Otherwise, load the cache and check if the weblink is in there.
+            with open(fn_cache, 'r') as fs:
+                cache = json.load(fs)
+
+            try:
+                data = np.array(cache[web_link])
+            except KeyError:
+                fields = self._parse_weblink(web_link)
+                data = self._get_csv(fields)
+                cache[web_link] = data.tolist()
+                with open(fn_cache, 'w') as fs:
+                    json.dump(cache, fs)
 
         Data.__init__(self, data[0], data[1])
 
