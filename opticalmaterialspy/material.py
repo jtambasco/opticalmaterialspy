@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
 
-import urllib.request
+from six.moves import urllib
 import os
 import json
 
