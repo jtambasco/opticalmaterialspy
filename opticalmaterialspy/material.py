@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
+from __future__ import absolute_import
+
+import urllib.request
+import os
+import json
 
 import numpy as np
 from scipy import constants as spc
 from scipy import interpolate as spi
 from ._material_base import _Material
-import urllib.request
-import os
-import json
 
 class Data(_Material):
     '''
