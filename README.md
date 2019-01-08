@@ -16,7 +16,7 @@ All properties are calculate from the Sellmeier equation of the material.  In or
 ## Installation
 There are two main ways to install `opticalmaterialspy`.
 
-* pip: `pip3 install opticalmaterialspy`
+* pip: `pip3 install opticalmaterialspy` or `pip2 install opticalmaterialspy`
 * Arch Linux: `yaourt -S python-opticalmaterialspy`
 
 ### Dependencies

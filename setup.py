@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='opticalmaterialspy',
-      version='0.3.2',
+      version='0.3.3',
       description='Python library with optical material properties.',
       url='https://github.com/jtambasco/opticalmaterialspy',
       author='Jean-Luc Tambasco',
@@ -9,7 +9,8 @@ setup(name='opticalmaterialspy',
       license='MIT',
       install_requires=[
           'numpy',
-          'scipy'
+          'scipy',
+          'future'
       ],
       packages=['opticalmaterialspy'],
       zip_safe=False)
