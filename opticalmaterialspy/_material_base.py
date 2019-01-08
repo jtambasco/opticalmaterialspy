@@ -3,9 +3,10 @@ from scipy import constants as spc
 from scipy import interpolate as spi
 import abc
 from functools import wraps
+from six import with_metaclass
 
 
-class _Material(metaclass=abc.ABCMeta):
+class _Material(with_metaclass(abc.ABCMeta)):
     '''
     Abstract material class that can calculate many
     material properties based on the permittivity.
@@ -253,7 +254,7 @@ class _Material(metaclass=abc.ABCMeta):
             n += c / wavelength**exponent
         return n
 
-class _MaterialAni(metaclass=abc.ABCMeta):
+class _MaterialAni(with_metaclass(abc.ABCMeta)):
     def __init__(self):
         pass
 
