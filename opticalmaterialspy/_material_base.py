@@ -136,7 +136,7 @@ class _Material(with_metaclass(abc.ABCMeta)):
     @convertWavelengthUnitsNm
     def ng(self, wavelength):
         '''
-        The group index with respect to wavelength.
+        The group index of the material.
 
         Args:
             wavelength (float, list, None): The wavelength(s) the group
@@ -150,7 +150,7 @@ class _Material(with_metaclass(abc.ABCMeta)):
     # Group velocity (v_g)
     def vg(self, wavelength):
         '''
-        The group velocities with respect to wavelength.
+        The group velocity of the material.
 
         Args:
             wavelength (float, list, None): The wavelength(s) the group
@@ -166,7 +166,7 @@ class _Material(with_metaclass(abc.ABCMeta)):
     @convertWavelengthUnitsNm
     def gvd(self, wavelength):
         '''
-        The group velocity dispersion (GVD) with respect to wavelength.
+        The group velocity dispersion (GVD) of the material.
 
         Args:
             wavelength (float, list, None): The wavelength(s) the GVD will
@@ -182,7 +182,7 @@ class _Material(with_metaclass(abc.ABCMeta)):
     @convertWavelengthUnitsNm
     def beta0(self, wavelength):
         '''
-        The propagation constant with respect to wavelength.
+        The propagation constant of the material.
 
         Args:
             wavelength (float, list, None): The wavelength(s) the
@@ -195,7 +195,8 @@ class _Material(with_metaclass(abc.ABCMeta)):
 
     def beta1(self, wavelength):
         '''
-        The derivative of the propagation constant with respect to wavelength.
+        The derivative of the propagation constant with respect to angular
+        frequency.
 
         Args:
             wavelength (float, list, None): The wavelength(s) the
@@ -208,7 +209,8 @@ class _Material(with_metaclass(abc.ABCMeta)):
 
     def beta2(self, wavelength):
         '''
-        The second derivative of the propagation constant with respect to wavelength.
+        The second derivative of the propagation constant with respect to
+        angular frequency.
 
         Args:
             wavelength (float, list, None): The wavelength(s) the
