@@ -4,6 +4,7 @@ from __future__ import absolute_import
 from six.moves import urllib
 import os
 import json
+import warnings
 
 import numpy as np
 from scipy import constants as spc
@@ -84,9 +85,8 @@ class RefractiveIndexWeb(Data):
         data = []
         for line in urllib.request.urlopen(csv_url).read().decode().split()[1:]:
             if line == 'wl,k':
-                import warnings
                 warnings.warn('Lossy materials are not currently supported. '
-                              'Values for k have been ignored.')
+                              'Values for k have been ignored.', stacklevel=3)
                 break
             data.append([float(x) for x in line.split(',')])
         data = np.array(data).T
