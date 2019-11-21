@@ -81,8 +81,15 @@ class RefractiveIndexWeb(Data):
         csv_url = 'https://refractiveindex.info/data_csv.php?datafile=data/%s/%s/%s.yml' \
             % (fields['shelf'], fields['book'], fields['page'])
 
-        data = urllib.request.urlopen(csv_url).read().decode().split('\r\n')[1:-1]
-        data = np.array([[float(x) for x in d.split(',')] for d in data]).T
+        data = []
+        for line in urllib.request.urlopen(csv_url).read().decode().split()[1:]:
+            if line == 'wl,k':
+                import warnings
+                warnings.warn('Lossy materials are not currently supported. '
+                              'Values for k have been ignored.')
+                break
+            data.append([float(x) for x in line.split(',')])
+        data = np.array(data).T
         return data
 
 class Air(_Material):
