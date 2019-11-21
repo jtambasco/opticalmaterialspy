@@ -98,19 +98,19 @@ class Ktp(_Material):
         _Material.__init__(self)
         assert(axis in ['x', 'y', 'z'])
         self.A = [None]*5
-        if axis is 'x':
+        if axis == 'x':
             self.A[0] = 3.29100
             self.A[1] = 0.04140
             self.A[2] = 0.03978
             self.A[3] = 9.35522
             self.A[4] = 31.45571
-        elif axis is 'y':
+        elif axis == 'y':
             self.A[0] = 3.45018
             self.A[1] = 0.04341
             self.A[2] = 0.04597
             self.A[3] = 16.98825
             self.A[4] = 39.43799
-        elif axis is 'z':
+        elif axis == 'z':
             self.A[0] = 4.59423
             self.A[1] = 0.06206
             self.A[2] = 0.04763
@@ -133,7 +133,7 @@ class Ln(_Material):
 
         self.A = [None]*4
         self.B = [None]*3
-        if axis is 'e':
+        if axis == 'e':
             self.A[0] =  4.582
             self.A[1] =  9.921e4
             self.A[2] =  2.109e2
@@ -141,7 +141,7 @@ class Ln(_Material):
             self.B[0] =  5.2716e-2
             self.B[1] = -4.9143e-5
             self.B[2] =  2.2971e-7
-        elif axis is 'o':
+        elif axis == 'o':
             self.A[0] =  4.9048
             self.A[1] =  1.1775e5
             self.A[2] =  2.1802e2
@@ -181,14 +181,14 @@ class LnMg(_Material):
         _Material.__init__(self)
         assert(axis in ['o', 'e'])
         self.A = [None]*6
-        if axis is 'e':
+        if axis == 'e':
             self.A[0] = 2.2454
             self.A[1] = 0.01242
             self.A[2] = 1.3005
             self.A[3] = 0.05313
             self.A[4] = 6.8972
             self.A[5] = 331.33
-        elif axis is 'o':
+        elif axis == 'o':
             self.A[0] = 2.4272
             self.A[1] = 0.01478
             self.A[2] = 1.4617
@@ -215,7 +215,7 @@ class LnMgTemp(_Material):
         self.F = (self.T - 24.5) * (self.T + 570.82)
         self.A = [None]*6
         self.B = [None]*6
-        if axis is 'e':
+        if axis == 'e':
             self.A[0] = 5.756
             self.A[1] = 0.0983
             self.A[2] = 0.2020
@@ -226,7 +226,7 @@ class LnMgTemp(_Material):
             self.B[1] = 4.700e-8
             self.B[2] = 6.113e-8
             self.B[3] = 1.516e-4
-        elif axis is 'o':
+        elif axis == 'o':
             self.A[0] = 5.653
             self.A[1] = 0.1185
             self.A[2] = 0.2091
@@ -255,12 +255,12 @@ class Bbo(_Material):
         _Material.__init__(self)
         assert(axis in ['o', 'e'])
         self.A = [None]*4
-        if axis is 'e':
+        if axis == 'e':
             self.A[0] = 2.3730
             self.A[1] = 0.0128
             self.A[2] = 0.0156
             self.A[3] = 0.0044
-        elif axis is 'o':
+        elif axis == 'o':
             self.A[0] = 2.7405
             self.A[1] = 0.0184
             self.A[2] = 0.0179
@@ -279,17 +279,17 @@ class Bibo(Bbo):
         _Material.__init__(self)
         assert(axis in ['x', 'y', 'z'])
         self.A = [None]*5
-        if axis is 'x':
+        if axis == 'x':
             self.A[0] = 3.0722
             self.A[1] = 0.0324
             self.A[2] = 0.0315
             self.A[3] = 0.0133
-        elif axis is 'y':
+        elif axis == 'y':
             self.A[0] = 3.1669
             self.A[1] = 0.0372
             self.A[2] = 0.0348
             self.A[3] = 0.0175
-        elif axis is 'z':
+        elif axis == 'z':
             self.A[0] = 3.6525
             self.A[1] = 0.0511
             self.A[2] = 0.0370
