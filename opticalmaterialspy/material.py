@@ -85,6 +85,53 @@ class RefractiveIndexWeb(Data):
         data = np.array([[float(x) for x in d.split(',')] for d in data]).T
         return data
 
+class RefractiveIndexWebCSVLink(Data):
+    '''
+    Object to create a `_Material` based on data from https://refractiveindex.info/.
+
+    Args:
+        web_link (str):  The web link to the material.  As an example, for GaAs
+            by Aspnes et al. 1986 the one should use
+            'https://refractiveindex.info/?shelf=main&book=GaAs&page=Aspnes'.
+    '''
+    def __init__(self, csv_link):
+        self._csv_link = csv_link
+
+        path = os.path.dirname(__file__)
+        fn_cache = path + '/.material.cache'
+        if not os.path.exists(fn_cache):
+            # If cache file does not yet exist.
+            # Get web data and dump it to the newly created cache file.
+            data = self._get_csv(csv_link)
+            cache = {csv_link: data.tolist()}
+            with open(fn_cache, 'w') as fs:
+                json.dump(cache, fs)
+        else:
+            # Otherwise, load the cache and check if the csvlink is in there.
+            with open(fn_cache, 'r') as fs:
+                cache = json.load(fs)
+
+            try:
+                data = np.array(cache[csv_link])
+            except KeyError:
+                data = self._get_csv(csv_link)
+                cache[csv_link] = data.tolist()
+                with open(fn_cache, 'w') as fs:
+                    json.dump(cache, fs)
+
+        Data.__init__(self, data[0], data[1])
+
+    def _get_csv(self, csv_url):
+        data = urllib.request.urlopen(csv_url).read().decode().split('\r\n')[1:-1]
+
+        # find first empty entry in data and remove everything afterwards
+        i = 0
+        while(data[i] != '' and i<len(data)-1):
+            i+=1
+        data = data[0:i]
+        data = np.array([[float(x) for x in d.split(',')] for d in data]).T
+        return data
+
 class Air(_Material):
     def __init__(self):
         _Material.__init__(self)
