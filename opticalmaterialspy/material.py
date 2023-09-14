@@ -79,7 +79,7 @@ class RefractiveIndexWeb(Data):
         return fields
 
     def _get_csv(self, fields):
-        csv_url = 'https://refractiveindex.info/data_csv.php?datafile=data/%s/%s/%s.yml' \
+        csv_url = '%https://refractiveindex.info/data_csv.php?datafile=database/data-nk/s/%s/%s.yml' \
             % (fields['shelf'], fields['book'], fields['page'])
 
         data = []
